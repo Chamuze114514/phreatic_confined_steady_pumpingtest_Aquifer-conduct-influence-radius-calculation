@@ -1,2 +1,4 @@
 # phreatic_confined_steady_pumpingtest_Aquifer-conduct-influence-radius-calculation
 Calculate the hydraulic conductivity and radius of influence of unconfined and confined aquifers using steady-state pumping test data.
+Using known parameters—such as pumping rate, steady-state drawdown, aquifer thickness, and well casing radius—this program calculates the aquifer's hydraulic conductivity and radius of influence by simultaneously solving the empirical formula for the radius of influence and the Dupuit equation; it also generates a plot of the water table profile after steady-state conditions are reached. The plot provides a visual representation of the groundwater level following the stabilization of the pumping test and displays the calculated value of the aquifer's hydraulic conductivity.
+email：llc1021@126.com
