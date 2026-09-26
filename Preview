@@ -1,0 +1,40 @@
+mport numpy as np
+import math
+from scipy import optimize
+import matplotlib.pyplot as plt #用于绘图
+import matplotlib.font_manager
+import matplotlib.ticker as ticker
+#说明：根据稳定流抽水试验数据，知道抽水井的抽水量和稳定降深，求含水层渗透系数和影响半径
+
+#函数
+def f(x, params):
+    xk, xr = x.tolist()
+    thick, rw, sw, q, type = params
+    #print(f"thick = {thick} rw = {rw} sw = {sw} q = {q}")
+    #潜水
+    if type == 0:
+        return [
+            np.pi*xk*(2*thick-sw)*sw/q + math.log(rw) - xr,#抽水
+            #np.pi*xk*(2*thick*sw + sw*sw)/q + math.log(rw) - xr,#注水
+            math.log(2.0*sw) + 0.5*math.log(thick*xk) - xr
+        ]
+    
+    #承压水
+    if type == 1:
+        return [
+            np.pi*2.0*xk*thick*sw/q + math.log(rw) - xr,
+            math.log(10.0*sw) + 0.5*math.log(xk) - xr
+        ]
+
+#主程序
+thick = 15 #含水层厚度m  
+rw = 0.05  #140mm  0.0616m 200mm  0.0904
+sw = 6 #稳定降深m
+q = 360  #抽水量m3/d
+
+depth_wt = -10.0 #水位埋深，负值表示在地面以下
+type = 0 # 0表示潜水，1表示承压水
+if type == 1:
+    depth_top = -40 #承压含水层顶部埋深，负值表示在地面以下
+params = [thick, rw, sw, q, type]
+xk, lnR = [0.5, 1] #渗透系数的初始值和影响半径自然对数的初始值
